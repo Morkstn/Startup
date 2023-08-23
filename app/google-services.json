@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "922595860723",
+    "project_id": "startupmjv-4989a",
+    "storage_bucket": "startupmjv-4989a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922595860723:android:0389d273710822eb6bd786",
+        "android_client_info": {
+          "package_name": "com.fiap.startup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922595860723-3en1lt8hbu2llkeg9nlaunjvhnc5146h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fiap.startup",
+            "certificate_hash": "21908308ec2808ab54bafe77dbd699eb5d9340e3"
+          }
+        },
+        {
+          "client_id": "922595860723-mnkgqs1it6kegv6majff3tji0v3fu8fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZTJEJ6-zOsAuRBKRo2crWJYNIF0ZkpMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922595860723-gu07itntq7n1c5gkeepgq7bs900hiduu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

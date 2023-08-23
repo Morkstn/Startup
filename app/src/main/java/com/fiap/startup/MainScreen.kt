@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 
 @Composable
-fun MainScreen(){
+fun MainScreen() {
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -23,5 +23,7 @@ fun MainScreen(){
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview(){
+
     MainScreen()
+
 }

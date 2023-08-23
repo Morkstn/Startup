@@ -1,9 +1,7 @@
 package com.fiap.startup
 
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -26,7 +24,7 @@ fun SplashScreen(navController: NavHostController){
     LaunchedEffect(key1 = true){
         delay(5000)
         navController.popBackStack()
-        navController.navigate(AppScreen.MainScreen.route)
+        navController.navigate(AppScreen.SingUpScreen.route)
     }
 
     Splash()
@@ -34,18 +32,25 @@ fun SplashScreen(navController: NavHostController){
 
 @Composable
 fun Splash(){
-    Column(
+    Box(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-        ) {
-        Image(painter = painterResource(id = R.drawable.logo_mjv), 
-            contentDescription = "Logo MJV", Modifier.size(150.dp, 150.dp))
-        Text(text = "MJV Corporation", fontSize = 15.sp,
-            fontWeight = FontWeight.Bold
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo_mjv),
+            contentDescription = "Logo MJV",
+            modifier = Modifier.size(150.dp, 150.dp)
+        )
+
+        Text(
+            text = "MJV Corporation",
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
