@@ -86,10 +86,13 @@ fun SingUpScreen(navController: NavController) {
             onValueChange = { confirmPassword = it },
             label = { Text("Confirm Password") },
             visualTransformation = PasswordVisualTransformation(),
+
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
+
         )
+
         Spacer(modifier = Modifier.height(20.dp))
         Button(
             onClick = {

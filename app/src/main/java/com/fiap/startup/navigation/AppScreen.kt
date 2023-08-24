@@ -1,18 +1,24 @@
 package com.fiap.startup.navigation
 
-sealed class AppScreen(val route: String) {
+
+sealed class AppScreen(val route: String,  val title: String) {
 
 
-    object SplashScreen: AppScreen("splash_screen")
+    object SplashScreen: AppScreen("Splash", "splash_screen")
 
-    object LoginScreen: AppScreen("login_screen")
+    object LoginScreen: AppScreen("Login","login_screen")
 
-    object SingUpScreen: AppScreen("singUp_screen")
+    object  PasswordRecoveryScreen: AppScreen("Reset", "reset_account")
+    object SingUpScreen: AppScreen("Create","singUp_screen")
 
-    object MainScreen: AppScreen("main_screen")
 
-    object ExplorerScreen: AppScreen("explorer_screen")
 
-    object ProfileScreen: AppScreen("profile_screen")
+    object MainScreen: AppScreen("Main","main_screen")
+
+    object ExplorerScreen: AppScreen("Explorer","explorer_screen")
+
+    object ProfileScreen: AppScreen("Profile","profile_screen")
+
+
 
 }
