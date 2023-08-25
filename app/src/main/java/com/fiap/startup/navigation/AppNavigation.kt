@@ -37,11 +37,11 @@ fun AppNavigation() {
         }
 
         composable(AppScreen.ProfileScreen.route){
-            ProfileScreen()
+            ProfileScreen(navController = navController)
         }
 
         composable(AppScreen.ExplorerScreen.route){
-            ExplorerScreen()
+            ExplorerScreen(navController = navController)
         }
 
         // Configurando a barra de navegação para a tela principal

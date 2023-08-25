@@ -54,8 +54,8 @@ fun MainScreen(navController: NavController) {
                 Text(
                     text = "Earnings Today",
                     style = TextStyle(
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight(300),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
                         color = Color(0xFFFFFFFF)
                     ),
                     modifier = Modifier
@@ -63,7 +63,7 @@ fun MainScreen(navController: NavController) {
                         .height(20.dp)
                         .align(Alignment.Start) // Alinha no canto esquerdo
                 )
-                Spacer(modifier = Modifier.height(8.dp)) // Espaço adicionado
+                Spacer(modifier = Modifier.height(16.dp)) // Espaço adicionado
 
                 Text(
                     text = "Earnings",
@@ -150,7 +150,7 @@ fun MainScreen(navController: NavController) {
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "New Content Box", // Texto da nova Box
+                    text = "My recommendations", // Texto da nova Box
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
@@ -205,6 +205,22 @@ fun MainScreen(navController: NavController) {
                         .height(1.dp)
                         .background(Color.Black)
                 )
+                Spacer(modifier = Modifier.height(16.dp)) // Espaço adicionado
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+
+                ) {
+                    Button(
+                        onClick = {
+                            // Your button click logic here
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                    ) {
+                        Text("Invite Friends")
+                    }
+                }
 
 
 
@@ -231,14 +247,6 @@ fun MainScreen(navController: NavController) {
             ) {
                 Text("Profile")
             }
-
-            // Novo botão 2
-            /*Button(
-                    onClick = { *//* Ação para o botão 2 *//* }
-            ) {
-                Text("Botão 2")
-            }*/
-
         }
     }
 }
