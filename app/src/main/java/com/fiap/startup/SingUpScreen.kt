@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -29,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.fiap.startup.database.repository.UsuarioRepository
+import com.fiap.startup.model.Usuario
 import com.fiap.startup.navigation.AppScreen
 import com.google.firebase.auth.FirebaseAuth
 
@@ -40,6 +43,9 @@ fun SingUpScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+    val usuarioRepository = UsuarioRepository(context)
 
     Column(
         modifier = Modifier
@@ -96,6 +102,13 @@ fun SingUpScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(20.dp))
         Button(
             onClick = {
+                val usuario = Usuario(
+                    id = 0,
+                    nome = name,
+                    email = email,
+                    password = password
+                )
+                usuarioRepository.salvar(usuario)
                 // Authenticate using Firebase
                 val auth = FirebaseAuth.getInstance()
 
