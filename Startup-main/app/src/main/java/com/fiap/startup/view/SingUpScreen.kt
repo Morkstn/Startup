@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -19,11 +21,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,7 +41,7 @@ import com.fiap.startup.database.repository.UsuarioRepository
 import com.fiap.startup.model.Usuario
 import com.fiap.startup.navigation.AppScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioRepository) {
     var name by remember { mutableStateOf("") }
@@ -43,6 +50,13 @@ fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioReposit
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val emailFocusRequester = remember { FocusRequester() }
+    val cpfFocusRequester = remember { FocusRequester() }
+    val passwordFocusRequester = remember { FocusRequester() }
+    val confirmPasswordFocusRequester = remember { FocusRequester() }
+
 
     Column(
         modifier = Modifier
@@ -62,34 +76,67 @@ fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioReposit
             label = { Text("Name") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(8.dp),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next // Define a ação do teclado como "Next"
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    emailFocusRequester.requestFocus()
+                }
+            )
         )
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = {
-                Text("Email")
-            },
+            label = { Text("Email") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
+                .focusRequester(emailFocusRequester),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next // Define a ação do teclado como "Next"
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    cpfFocusRequester.requestFocus()
+                }
+            )
         )
         OutlinedTextField(
             value = cpf,
             onValueChange = { cpf = it },
-            label = { Text("CPF") }, // Você pode personalizar a label de acordo com suas necessidades
+            label = { Text("CPF") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
+                .focusRequester(cpfFocusRequester),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next // Define a ação do teclado como "Next"
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    passwordFocusRequester.requestFocus()
+                }
+            )
         )
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
+                .focusRequester(passwordFocusRequester),
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next // Define a ação do teclado como "Next"
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    confirmPasswordFocusRequester.requestFocus()
+                }
+            )
         )
         OutlinedTextField(
             value = confirmPassword,
@@ -99,30 +146,45 @@ fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioReposit
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-        )
+                .focusRequester(confirmPasswordFocusRequester),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done // Define a ação do teclado como "Done" no último campo
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    if (password == confirmPassword) {
+                        val usuario = Usuario(
+                            id = 0,
+                            nome = name,
+                            email = email,
+                            cpf = cpf,
+                            password = password
+                        )
+                        val userId = usuarioRepository.salvar(usuario)
 
+                        if (userId > 0) {
+                            // Usuário criado com sucesso, navegue para a próxima tela
+                            navController.navigate(AppScreen.MainScreen.route)
+                        } else {
+                            errorMessage = "Falha ao criar o usuário."
+                        }
+                    } else {
+                        errorMessage = "As senhas não coincidem."
+                    }
+                    keyboardController?.hide()
+                }
+            ),
+
+        )
+//
         Spacer(modifier = Modifier.height(20.dp))
         Button(
             onClick = {
-                if (password == confirmPassword) {
-                    val usuario = Usuario(
-                        id = 0,
-                        nome = name,
-                        email = email,
-                        cpf = cpf,
-                        password = password
-                    )
-                    val userId = usuarioRepository.salvar(usuario)
+                // Lógica de validação do registro aqui
+                // ...
 
-                    if (userId > 0) {
-                        // Usuário criado com sucesso, navegue para a próxima tela
-                        navController.navigate(AppScreen.MainScreen.route)
-                    } else {
-                        errorMessage = "Falha ao criar o usuário."
-                    }
-                } else {
-                    errorMessage = "As senhas não coincidem."
-                }
+                // Fechar o teclado quando o botão é pressionado
+                keyboardController?.hide()
             },
             modifier = Modifier
                 .width(260.dp)
