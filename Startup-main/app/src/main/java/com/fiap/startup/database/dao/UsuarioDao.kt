@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.fiap.startup.model.Usuario
+
 @Dao
 interface UsuarioDao {
 
@@ -15,6 +16,8 @@ interface UsuarioDao {
     @Update
     fun atualizar(usuario: Usuario): Int
 
+
+
     @Delete
     fun excluir(usuario: Usuario): Int
 
@@ -23,4 +26,5 @@ interface UsuarioDao {
 
     @Query("SELECT * FROM tb_usuario WHERE email = :email")
     fun buscarPorEmail(email: String): Usuario?
+
 }

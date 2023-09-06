@@ -54,7 +54,6 @@ fun AppNavigation() {
         composable(AppScreen.PasswordRecoveryScreen.route){
             PasswordRecoveryScreen(navController = navController)
         }
-
     }
 }
 

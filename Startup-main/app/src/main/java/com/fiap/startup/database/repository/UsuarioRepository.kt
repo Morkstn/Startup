@@ -25,4 +25,8 @@ class UsuarioRepository(context: Context) {
         val usuario = db.buscarPorEmail(email)
         return usuario != null && usuario.password == password
     }
+
+
+
+
 }

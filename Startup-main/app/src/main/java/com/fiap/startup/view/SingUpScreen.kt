@@ -158,7 +158,7 @@ fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioReposit
                             nome = name,
                             email = email,
                             cpf = cpf,
-                            password = password
+                            password = password,
                         )
                         val userId = usuarioRepository.salvar(usuario)
 
@@ -175,7 +175,7 @@ fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioReposit
                 }
             ),
 
-        )
+            )
 //
         Spacer(modifier = Modifier.height(20.dp))
         Button(

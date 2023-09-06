@@ -9,9 +9,10 @@ data class Usuario(
     var nome: String = "",
     var email: String= "",
     var cpf: String = "",
-    var saldo: Double = 0.00,
+    var saldo: Double = 5.00,
     var bonus: Double = 0.00,
     var premium: Boolean = false,
     var password: String = "",
 
-)
+
+    )

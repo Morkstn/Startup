@@ -9,6 +9,8 @@ sealed class AppScreen(val route: String,  val title: String) {
     object LoginScreen: AppScreen("Login","login_screen")
 
     object  PasswordRecoveryScreen: AppScreen("Reset", "reset_account")
+
+    //object  ChooseNewPassword: AppScreen ("NewPassword", "reset_password")
     object SingUpScreen: AppScreen("Create","singUp_screen")
 
 

@@ -39,74 +39,74 @@ fun PasswordRecoveryScreen(navController: NavController) {
     var isPasswordResetSent by remember { mutableStateOf(false) }
 
     Column(
-            modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .background(Color.White),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .background(Color.White),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-                text = "Enter your account",
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(bottom = 16.dp)
+            text = "Enter your account",
+            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+            modifier = Modifier.padding(bottom = 16.dp)
         )
         OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = {
-                    Text("Email")
-                },
-                modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+            value = email,
+            onValueChange = { email = it },
+            label = {
+                Text("Email")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
 
         if (isPasswordResetSent) {
             Text(
-                    text = "Password reset email sent. Check your inbox.",
-                    color = Color.Green,
-                    modifier = Modifier.padding(16.dp)
+                text = "Password reset email sent. Check your inbox.",
+                color = Color.Green,
+                modifier = Modifier.padding(16.dp)
             )
         } else {
             Button(
-                    onClick = {
-                        // Send password reset email using Firebase
-                        val auth = FirebaseAuth.getInstance()
-                        auth.sendPasswordResetEmail(email)
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        isPasswordResetSent = true
-                                    } else {
-                                        errorMessage = "Password reset email could not be sent. Please check the email address."
-                                    }
-                                }
-                    },
-                    modifier = Modifier
-                            .width(200.dp)
-                            .height(48.dp)
+                onClick = {
+                    // Send password reset email using Firebase
+                    val auth = FirebaseAuth.getInstance()
+                    auth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                isPasswordResetSent = true
+                            } else {
+                                errorMessage = "Password reset email could not be sent. Please check the email address."
+                            }
+                        }
+                },
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(48.dp)
             ) {
                 Text("Reset Email")
             }
 
             if (errorMessage.isNotEmpty()) {
                 Text(
-                        text = errorMessage,
-                        color = Color.Red,
-                        modifier = Modifier.padding(16.dp)
+                    text = errorMessage,
+                    color = Color.Red,
+                    modifier = Modifier.padding(16.dp)
                 )
             }
         }
 
         // Add a clickable text to navigate back to the login screen
         Text(
-                text = "Back to Login",
-                color = Color.Blue,
-                modifier = Modifier
-                        .padding(top = 20.dp)
-                        .clickable {
-                            navController.navigate(AppScreen.LoginScreen.route)
-                        }
+            text = "Back to Login",
+            color = Color.Blue,
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .clickable {
+                    navController.navigate(AppScreen.LoginScreen.route)
+                }
         )
     }
 }
