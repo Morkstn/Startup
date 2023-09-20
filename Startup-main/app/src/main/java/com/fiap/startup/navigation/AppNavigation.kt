@@ -13,6 +13,7 @@ import com.fiap.startup.view.LoginScreen
 import com.fiap.startup.view.MainScreen
 import com.fiap.startup.view.PasswordRecoveryScreen
 import com.fiap.startup.view.ProfileScreen
+import com.fiap.startup.view.SettingsScreen
 import com.fiap.startup.view.SingUpScreen
 import com.fiap.startup.view.SplashScreen
 
@@ -22,6 +23,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val context = LocalContext.current // Obtenha o contexto local
     val usuarioRepository = UsuarioRepository(context) // Crie uma instância do UsuarioRepository
+
 
     NavHost(navController = navController, startDestination = AppScreen.SplashScreen.route) {
         composable(AppScreen.SplashScreen.route) {
@@ -44,6 +46,9 @@ fun AppNavigation() {
         composable(AppScreen.ProfileScreen.route){
             ProfileScreen(navController = navController)
         }
+        composable(AppScreen.SettingsScreen.route){
+            SettingsScreen(navController = navController)
+        }
 
         composable(AppScreen.ExplorerScreen.route){
             ExplorerScreen(navController = navController)
@@ -54,6 +59,8 @@ fun AppNavigation() {
         composable(AppScreen.PasswordRecoveryScreen.route){
             PasswordRecoveryScreen(navController = navController)
         }
+
     }
 }
+
 

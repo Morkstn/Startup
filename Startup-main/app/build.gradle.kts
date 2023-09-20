@@ -58,6 +58,7 @@ android {
 //    }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -93,6 +94,9 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0")
     implementation("androidx.compose.ui:ui-text-android:1.5.0")
+    implementation("com.google.firebase:protolite-well-known-types:18.0.0")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("androidx.preference:preference:1.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -129,6 +133,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.5.2")
     annotationProcessor("androidx.room:room-compiler:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
+
+    implementation("io.coil-kt:coil-compose: 1.3.2")
+    implementation ("io.coil-kt:coil-compose:1.4.0")
 
 
 }

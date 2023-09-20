@@ -14,8 +14,9 @@ sealed class AppScreen(val route: String,  val title: String) {
     object SingUpScreen: AppScreen("Create","singUp_screen")
 
 
-
     object MainScreen: AppScreen("Main","main_screen")
+
+    object SettingsScreen: AppScreen("Setings", "settings_screen")
 
     object ExplorerScreen: AppScreen("Explorer","explorer_screen")
 

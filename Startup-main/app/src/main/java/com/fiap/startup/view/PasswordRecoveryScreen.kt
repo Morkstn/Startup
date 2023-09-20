@@ -86,7 +86,7 @@ fun PasswordRecoveryScreen(navController: NavController) {
                     .width(200.dp)
                     .height(48.dp)
             ) {
-                Text("Reset Email")
+                Text("Reset Password")
             }
 
             if (errorMessage.isNotEmpty()) {

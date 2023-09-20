@@ -19,8 +19,6 @@ class MainActivity : ComponentActivity() {
 
         // Initialize Firebase
 
-        //FirebaseApp.initializeApp(this)
-
         setContent {
            StartupTheme {
                 // A surface container using the 'background' color from the theme

@@ -165,6 +165,8 @@ fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioReposit
                         if (userId > 0) {
                             // Usuário criado com sucesso, navegue para a próxima tela
                             navController.navigate(AppScreen.MainScreen.route)
+
+
                         } else {
                             errorMessage = "Falha ao criar o usuário."
                         }
@@ -181,17 +183,34 @@ fun SingUpScreen(navController: NavController, usuarioRepository: UsuarioReposit
         Button(
             onClick = {
                 // Lógica de validação do registro aqui
-                // ...
+                if (password == confirmPassword) {
+                    val usuario = Usuario(
+                        id = 0,
+                        nome = name,
+                        email = email,
+                        cpf = cpf,
+                        password = password,
+                    )
+                    val userId = usuarioRepository.salvar(usuario)
+
+                    if (userId > 0) {
+                        // Usuário criado com sucesso, navegue para a próxima tela
+                        navController.navigate(AppScreen.MainScreen.route)
+                    } else {
+                        errorMessage = "Falha ao criar o usuário."
+                    }
+                } else {
+                    errorMessage = "As senhas não coincidem."
+                }
 
                 // Fechar o teclado quando o botão é pressionado
                 keyboardController?.hide()
             },
-            modifier = Modifier
-                .width(260.dp)
-                .height(48.dp)
+            modifier = Modifier.width(260.dp).height(48.dp)
         ) {
             Text("Register")
         }
+
 
         if (errorMessage.isNotEmpty()) {
             Text(
