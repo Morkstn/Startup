@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.fiap.startup.R
 import com.fiap.startup.model.Usuario
@@ -44,7 +45,7 @@ import com.fiap.startup.navigation.BackButton
 @Composable
 fun ProfileScreen(navController: NavController) {
     val notification = rememberSaveable { mutableStateOf("") }
-    val usuario = Usuario()
+    //val usuario = Usuario()
 
     // State variable to control button visibility
     val photoSelected = remember { mutableStateOf(false) }
@@ -73,24 +74,17 @@ fun ProfileScreen(navController: NavController) {
             Text("Profile")
         }
 
-        ProfileImage(
-            usuario = usuario,
-            onPhotoSelected = {
-                // Callback called when a photo is selected
-                photoSelected.value = true
-            }
-        )
+
     }
 }
 
 @Composable
 fun ProfileImage(usuario: Usuario, onPhotoSelected: () -> Unit) {
     val imageUri = rememberSaveable { mutableStateOf("") }
-    val painter = rememberImagePainter(
-        if (imageUri.value.isEmpty())
-            R.drawable.baseline_person
-        else
-            imageUri.value
+    val painter = rememberAsyncImagePainter(if (imageUri.value.isEmpty())
+        R.drawable.baseline_person
+    else
+        imageUri.value
     )
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()

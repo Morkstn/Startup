@@ -10,18 +10,22 @@ sealed class AppScreen(val route: String,  val title: String) {
 
     object  PasswordRecoveryScreen: AppScreen("Reset", "reset_account")
 
-    //object  ChooseNewPassword: AppScreen ("NewPassword", "reset_password")
+    object  ChooseNewPassword: AppScreen ("NewPassword", "reset_password")
     object SingUpScreen: AppScreen("Create","singUp_screen")
-
 
     object MainScreen: AppScreen("Main","main_screen")
 
     object SettingsScreen: AppScreen("Setings", "settings_screen")
 
+    object RewardsScreen: AppScreen("Rewards","rewards_screen")
+
     object ExplorerScreen: AppScreen("Explorer","explorer_screen")
 
     object ProfileScreen: AppScreen("Profile","profile_screen")
 
+    object CadastroTeste: AppScreen("Teste", "teste_cadastro")
+
+    object MainTeste: AppScreen("main_screen", "teste")
 
 
 }

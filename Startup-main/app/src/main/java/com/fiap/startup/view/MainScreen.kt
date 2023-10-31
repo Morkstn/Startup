@@ -1,8 +1,8 @@
 package com.fiap.startup.view
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,13 +23,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -48,26 +43,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.fiap.startup.R
-import com.fiap.startup.model.Usuario
+import com.fiap.startup.model.usuarioTeste
 import com.fiap.startup.navigation.AppScreen
+import com.fiap.startup.navigation.URLLauncher
 
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavController) {
-    val usuario = remember { Usuario() }
-    val saldo = usuario.saldo
+fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
+    val nomeUsuarioLogado = viewModel.nomeUsuarioLogado
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        // Lida com o resultado da ação (por exemplo, pode verificar se a URL foi aberta com sucesso)
+    }
+//    val args = remember { navController.currentBackStackEntry?.arguments }
+//    val name = args?.getString("name") ?: ""
+//    val usuario = remember { Usuario() }
+//    val saldo = usuario.saldo
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val name = navBackStackEntry?.arguments?.getString("name")
     var isAlertDialogVisible by remember { mutableStateOf(false) }
-    val name = usuario.nome
+
 
     Column(
         modifier = Modifier.fillMaxSize().fillMaxHeight().verticalScroll(rememberScrollState()),
@@ -84,8 +89,10 @@ fun MainScreen(navController: NavController) {
             Column(
                 modifier = Modifier.fillMaxSize().padding(16.dp)
             ) {
-                Text(text = "$name",
-                        color = Color.White)
+                Text("Bem-vindo,   $nomeUsuarioLogado",
+//                text = "$name",
+//                        color = Color.White
+                        )
                 Spacer(modifier = Modifier.height(70.dp)) // Adiciona espaço entre os textos
                 Text(
                     text = "O meio ambiente é a nossa casa. Devemos cuidar dele para as futuras gerações.", // Adiciona uma frase sobre o meio ambiente
@@ -105,7 +112,7 @@ fun MainScreen(navController: NavController) {
         ) {
             Card(
                 onClick = { navController.navigate(AppScreen.SettingsScreen.route) },
-                modifier = Modifier.width(80.dp).height(80.dp)
+                modifier = Modifier.width(110.dp).height(90.dp)
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -116,15 +123,16 @@ fun MainScreen(navController: NavController) {
                         modifier = Modifier.size(40.dp), // Tamanho do espaço do ícone
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(Icons.Default.Settings, contentDescription = null) // Adiciona um ícone de configurações
+                        val customIcon = painterResource(id = R.drawable.settings) // Substitua "ic_custom" pelo nome do seu ícone personalizado
+                        Image(painter = customIcon, contentDescription = null) // Adiciona um ícone de configurações
                     }
                     Text("Settings", textAlign = TextAlign.Center)
                 }
             }
 
             Card(
-                onClick = {  isAlertDialogVisible = true  },
-                modifier = Modifier.width(80.dp).height(80.dp)
+                    onClick = { navController.navigate(AppScreen.RewardsScreen.route) },
+                modifier = Modifier.width(110.dp).height(90.dp)
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -135,16 +143,17 @@ fun MainScreen(navController: NavController) {
                         modifier = Modifier.size(40.dp), // Tamanho do espaço do ícone
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = null) // Adiciona um ícone
+                        val customIcon = painterResource(id = R.drawable.trophy_star) // Substitua "ic_custom" pelo nome do seu ícone personalizado
+                        Image(painter = customIcon, contentDescription = null) // Adiciona um ícone
                     }
-                    Text("Claim", textAlign = TextAlign.Center)
+                    Text("Rewards", textAlign = TextAlign.Center)
                 }
             }
 
 
             Card(
                 onClick = { navController.navigate(AppScreen.ProfileScreen.route) },
-                modifier = Modifier.width(80.dp).height(80.dp)
+                modifier = Modifier.width(110.dp).height(90.dp)
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -155,30 +164,31 @@ fun MainScreen(navController: NavController) {
                         modifier = Modifier.size(40.dp), // Tamanho do espaço do ícone
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(Icons.Default.AccountBox, contentDescription = null) // Adiciona um ícone
+                        val customIcon = painterResource(id = R.drawable.user) // Substitua "ic_custom" pelo nome do seu ícone personalizado
+                        Image(painter = customIcon, contentDescription = null) // Adiciona um ícone
                     }
                     Text("Profile", textAlign = TextAlign.Center)
                 }
             }
 
-            Card(
-                onClick = { navController.navigate(AppScreen.ExplorerScreen.route) },
-                modifier = Modifier.width(80.dp).height(80.dp)
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Box(
-                        modifier = Modifier.size(40.dp), // Tamanho do espaço do ícone
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(Icons.Default.LocationOn, contentDescription = null) // Adiciona um ícone de exploração
-                    }
-                    Text("Explorer", textAlign = TextAlign.Center)
-                }
-            }
+//            Card(
+//                onClick = { navController.navigate(AppScreen.ExplorerScreen.route) },
+//                modifier = Modifier.width(80.dp).height(80.dp)
+//            ) {
+//                Column(
+//                    modifier = Modifier.fillMaxSize(),
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally
+//                ) {
+//                    Box(
+//                        modifier = Modifier.size(40.dp), // Tamanho do espaço do ícone
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        Icon(Icons.Default.LocationOn, contentDescription = null) // Adiciona um ícone de exploração
+//                    }
+//                    Text("Explorer", textAlign = TextAlign.Center)
+//                }
+//            }
         }
 
         Text(
@@ -207,12 +217,13 @@ fun MainScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Saldo MJV",
+                        text = "Balance: ",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = "$saldo",
+//                        text = "$saldo",
+                            text = "saldo",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
@@ -242,7 +253,7 @@ fun MainScreen(navController: NavController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Acessar saldo",
+                                text = "Acessar Extrato",
                             )
                             Icon(Icons.Default.ArrowForward, contentDescription = null)
                         }
@@ -288,7 +299,7 @@ fun MainScreen(navController: NavController) {
         }
 
         Text(
-            text = "Descubra mais",
+            text = "Explore outras funcionalidades",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 8.dp)
@@ -300,9 +311,12 @@ fun MainScreen(navController: NavController) {
         ) {
             item {
                 Card(
-                    onClick = { isAlertDialogVisible =
-                        true},
+
                     modifier = Modifier.width(175.dp).height(175.dp)
+                            .clickable {
+                        val url = "https://www.ultragaz.com.br/" // Substitua pela sua URL externa
+                        URLLauncher.launchURL(url, context, launcher)
+                    }
                 ) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -313,9 +327,10 @@ fun MainScreen(navController: NavController) {
                             modifier = Modifier.size(40.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(Icons.Default.Share, contentDescription = null)
+                            val customIcon = painterResource(id = R.drawable.users) // Substitua "ic_custom" pelo nome do seu ícone personalizado
+                            Image(painter = customIcon, contentDescription = null)
                         }
-                        Text("Indicar Amigos", textAlign = TextAlign.Center)
+                        Text("Community", textAlign = TextAlign.Center)
                     }
                 }
             }
@@ -365,10 +380,10 @@ fun MainScreen(navController: NavController) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES. Q)
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    val navController = rememberNavController()
-    MainScreen(navController = navController)
-}
+//@RequiresApi(Build.VERSION_CODES. Q)
+//@Preview(showBackground = true)
+//@Composable
+//fun MainScreenPreview() {
+//    val navController = rememberNavController()
+//    MainScreen(navController = navController)
+//}

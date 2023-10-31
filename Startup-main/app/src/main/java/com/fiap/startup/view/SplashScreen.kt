@@ -17,19 +17,28 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.fiap.startup.R
 import com.fiap.startup.navigation.AppScreen
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController){
-    
-    LaunchedEffect(key1 = true){
-        delay(5000)
+fun SplashScreen(navController: NavHostController) {
+    val user = FirebaseAuth.getInstance().currentUser
+    if (user != null) {
+        // O usuário já está autenticado, navegue diretamente para a tela principal
         navController.popBackStack()
-        navController.navigate(AppScreen.SingUpScreen.route)
+        navController.navigate(AppScreen.MainScreen.route)
+    } else {
+        // O usuário não está autenticado, navegue para a tela de cadastro
+        LaunchedEffect(key1 = true) {
+            delay(5000)
+            navController.popBackStack()
+            navController.navigate(AppScreen.SingUpScreen.route)
+        }
     }
 
     Splash()
 }
+
 
 @Composable
 fun Splash(){
