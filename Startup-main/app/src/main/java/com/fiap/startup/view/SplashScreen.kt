@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
+fun SplashScreen(navController: NavHostController){
     val user = FirebaseAuth.getInstance().currentUser
     if (user != null) {
         // O usuário já está autenticado, navegue diretamente para a tela principal
@@ -38,7 +38,6 @@ fun SplashScreen(navController: NavHostController) {
 
     Splash()
 }
-
 
 @Composable
 fun Splash(){

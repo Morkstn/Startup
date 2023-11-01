@@ -1,31 +1,34 @@
 package com.fiap.startup.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.fiap.startup.database.User
 import com.fiap.startup.model.usuarioTeste
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+
 
 @Composable
 fun SingUpScreen(navController: NavHostController, viewModel: usuarioTeste) {
@@ -36,40 +39,40 @@ fun SingUpScreen(navController: NavHostController, viewModel: usuarioTeste) {
 
 
     Column(
-            modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         androidx.compose.material.Text("Cadastro", fontSize = 24.sp)
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-                value = nome,
-                onValueChange = { nome = it },
-                label = { androidx.compose.material.Text("Nome") },
-                modifier = Modifier.fillMaxWidth()
+            value = nome,
+            onValueChange = { nome = it },
+            label = { androidx.compose.material.Text("Nome") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { androidx.compose.material.Text("Email") },
-                modifier = Modifier.fillMaxWidth()
+            value = email,
+            onValueChange = { email = it },
+            label = { androidx.compose.material.Text("Email") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-                value = senha,
-                onValueChange = { senha = it },
-                label = { androidx.compose.material.Text("Senha") },
-                modifier = Modifier.fillMaxWidth()
+            value = senha,
+            onValueChange = { senha = it },
+            label = { androidx.compose.material.Text("Senha") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-                value = cpf,
-                onValueChange = { cpf = it },
-                label = { androidx.compose.material.Text("CPF") },
-                modifier = Modifier.fillMaxWidth()
+            value = cpf,
+            onValueChange = { cpf = it },
+            label = { androidx.compose.material.Text("CPF") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         androidx.compose.material.Button(onClick = {
@@ -78,44 +81,44 @@ fun SingUpScreen(navController: NavHostController, viewModel: usuarioTeste) {
                 val auth = FirebaseAuth.getInstance()
 
                 auth.createUserWithEmailAndPassword(email, senha)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                // Cadastro bem-sucedido, você pode agora atualizar as informações do usuário
-                                // e navegar para a tela principal
-                                val user = auth.currentUser
-                                if (user != null) {
-                                    val firebaseDatabase = FirebaseDatabase.getInstance()
-                                    val databaseReference = firebaseDatabase.reference.child("user")
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Cadastro bem-sucedido, você pode agora atualizar as informações do usuário
+                            // e navegar para a tela principal
+                            val user = auth.currentUser
+                            if (user != null) {
+                                val firebaseDatabase = FirebaseDatabase.getInstance()
+                                val databaseReference = firebaseDatabase.reference.child("user")
 
-                                    val userData = User(nome, cpf) // Crie uma classe User com campos nome e cpf
+                                val userData = User(nome, cpf) // Crie uma classe User com campos nome e cpf
 
-                                    // Salve os dados do usuário no Firebase Realtime Database
-                                    databaseReference.child(user.uid).setValue(userData)
+                                // Salve os dados do usuário no Firebase Realtime Database
+                                databaseReference.child(user.uid).setValue(userData)
 
-                                    // Salve o nome do usuário no ViewModel
-                                    viewModel.nomeUsuario = nome
-                                    viewModel.emailUsuario = email
-                                    viewModel.senhaUsuario = senha
-                                    viewModel.cpf = cpf
+                                // Salve o nome do usuário no ViewModel
+                                viewModel.nomeUsuario = nome
+                                viewModel.emailUsuario = email
+                                viewModel.senhaUsuario = senha
+                                viewModel.cpf = cpf
 
-                                    // Set the logged-in user's name in the ViewModel
-                                    viewModel.nomeUsuarioLogado = nome
+                                // Set the logged-in user's name in the ViewModel
+                                viewModel.nomeUsuarioLogado = nome
 
 
-                                    // Navigate to the main screen
-                                    navController.navigate("Main")
-                                }
+                                // Navigate to the main screen
+                                navController.navigate("Main")
+                            }
+                        } else {
+                            // O cadastro falhou, trate o erro conforme necessário
+                            val exception = task.exception
+                            if (exception is FirebaseAuthException) {
+                                // Trate erros específicos do Firebase Authentication
+                                // Pode mostrar uma mensagem de erro ao usuário
                             } else {
-                                // O cadastro falhou, trate o erro conforme necessário
-                                val exception = task.exception
-                                if (exception is FirebaseAuthException) {
-                                    // Trate erros específicos do Firebase Authentication
-                                    // Pode mostrar uma mensagem de erro ao usuário
-                                } else {
-                                    // Trate outros erros
-                                }
+                                // Trate outros erros
                             }
                         }
+                    }
             }
         }) {
             androidx.compose.material.Text("Cadastrar")
@@ -123,12 +126,21 @@ fun SingUpScreen(navController: NavHostController, viewModel: usuarioTeste) {
         Spacer(modifier = Modifier.height(16.dp))
         // Código adicional
         Text(
-                text = "Já tem uma conta? Faça login",
-                color = Color.Blue,
-                modifier = Modifier.clickable {
-                    // Navegue para a tela de login quando o link for clicado
-                    navController.navigate("Login")
-                }
+            text = "Já tem uma conta? Faça login",
+            color = Color.Blue,
+            modifier = Modifier.clickable {
+                // Navegue para a tela de login quando o link for clicado
+                navController.navigate("Login")
+            }
         )
     }
+}
+
+@RequiresApi(Build.VERSION_CODES. Q)
+@Preview(showBackground = true)
+@Composable
+fun SignUpPreview() {
+    val navController = rememberNavController()
+    val viewModel = usuarioTeste() // Substitua pelo seu ViewModel
+    SingUpScreen(navController = navController, viewModel = viewModel)
 }

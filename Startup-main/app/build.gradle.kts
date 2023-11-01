@@ -73,9 +73,6 @@ android {
 
 dependencies {
 
-    implementation ("org.mongodb:mongodb-driver-sync:4.2.3")
-    implementation ("io.realm.mongodb:realm-android:11.2.2")
-
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")

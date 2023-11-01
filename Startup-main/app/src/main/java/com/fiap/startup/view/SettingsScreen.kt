@@ -34,6 +34,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startup.navigation.AppScreen
 import com.fiap.startup.navigation.BackButton
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
@@ -128,6 +129,8 @@ fun SettingsScreen(navController: NavController){
                 .height(70.dp)
                 .padding(14.dp)
                 .clickable(onClick = {
+                    val auth = FirebaseAuth.getInstance()
+                    auth.signOut() // Isso irá deslogar o usuário
                     navController.navigate(AppScreen.SingUpScreen.route)
                 }),
         ) {

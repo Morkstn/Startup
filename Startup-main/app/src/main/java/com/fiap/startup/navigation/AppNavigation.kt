@@ -9,18 +9,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startup.database.repository.UsuarioRepository
-//import com.fiap.startup.view.CadastroTeste
+import com.fiap.startup.model.usuarioTeste
 import com.fiap.startup.view.ExplorerScreen
 import com.fiap.startup.view.LoginScreen
 import com.fiap.startup.view.MainScreen
-//import com.fiap.startup.view.MainTeste
 import com.fiap.startup.view.PasswordRecoveryScreen
 import com.fiap.startup.view.ProfileScreen
 import com.fiap.startup.view.RewardsScreen
 import com.fiap.startup.view.SettingsScreen
 import com.fiap.startup.view.SingUpScreen
 import com.fiap.startup.view.SplashScreen
-import com.fiap.startup.model.usuarioTeste
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -70,14 +68,6 @@ fun AppNavigation() {
         composable(AppScreen.PasswordRecoveryScreen.route){
             PasswordRecoveryScreen(navController = navController)
         }
-
-//        composable(AppScreen.CadastroTeste.route) {
-//            CadastroTeste(navController, viewModel)
-//        }
-//
-//        composable(AppScreen.MainTeste.route) {
-//            MainTeste(navController,  viewModel)
-//        }
 
     }
 }

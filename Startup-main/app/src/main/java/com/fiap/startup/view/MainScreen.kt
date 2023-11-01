@@ -1,8 +1,10 @@
 package com.fiap.startup.view
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -47,11 +49,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.fiap.startup.R
+import com.fiap.startup.model.Usuario
 import com.fiap.startup.model.usuarioTeste
 import com.fiap.startup.navigation.AppScreen
 import com.fiap.startup.navigation.URLLauncher
@@ -314,7 +320,7 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
 
                     modifier = Modifier.width(175.dp).height(175.dp)
                             .clickable {
-                        val url = "https://www.ultragaz.com.br/" // Substitua pela sua URL externa
+                        val url = "https://www.instagram.com/minkostn/" // Substitua pela sua URL externa
                         URLLauncher.launchURL(url, context, launcher)
                     }
                 ) {
@@ -380,10 +386,11 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
     }
 }
 
-//@RequiresApi(Build.VERSION_CODES. Q)
-//@Preview(showBackground = true)
-//@Composable
-//fun MainScreenPreview() {
-//    val navController = rememberNavController()
-//    MainScreen(navController = navController)
-//}
+@RequiresApi(Build.VERSION_CODES. Q)
+@Preview(showBackground = true)
+@Composable
+fun MainScreenPreview() {
+    val navController = rememberNavController()
+    val viewModel = usuarioTeste() // Substitua pelo seu ViewModel
+    MainScreen(navController = navController, viewModel = viewModel)
+}
