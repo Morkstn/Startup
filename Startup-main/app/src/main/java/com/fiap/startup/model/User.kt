@@ -15,4 +15,6 @@ class usuarioTeste : ViewModel() {
     var senhaUsuario by mutableStateOf("")
     var cpf by mutableStateOf("")
 
+    var isDarkTheme: Boolean by mutableStateOf(false)
+
 }

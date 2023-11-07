@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+//import org.jetbrains.kotlin.kapt3.base.Kapt
+//import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
@@ -139,6 +139,10 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose: 1.3.2")
     implementation ("io.coil-kt:coil-compose:1.4.0")
+
+    implementation("androidx.compose.ui:ui:1.0.0")
+
+
 
 
 }

@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,8 +31,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
@@ -39,21 +44,16 @@ import coil.compose.rememberImagePainter
 import com.fiap.startup.R
 import com.fiap.startup.model.Usuario
 import com.fiap.startup.model.getNome
+import com.fiap.startup.model.usuarioTeste
 import com.fiap.startup.navigation.BackButton
+import androidx.lifecycle.ViewModel
+
 
 
 @Composable
-fun ProfileScreen(navController: NavController) {
-    val notification = rememberSaveable { mutableStateOf("") }
-    //val usuario = Usuario()
+fun ProfileScreen(navController: NavController, ViewModel: usuarioTeste) {
+    val viewModel = usuarioTeste()
 
-    // State variable to control button visibility
-    val photoSelected = remember { mutableStateOf(false) }
-
-    if (notification.value.isNotEmpty()) {
-        Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_LONG).show()
-        notification.value = ""
-    }
 
     Column(
         modifier = Modifier
@@ -73,52 +73,29 @@ fun ProfileScreen(navController: NavController) {
             Spacer(modifier = Modifier.width(5.dp))
             Text("Profile")
         }
-
-
-    }
-}
-
-@Composable
-fun ProfileImage(usuario: Usuario, onPhotoSelected: () -> Unit) {
-    val imageUri = rememberSaveable { mutableStateOf("") }
-    val painter = rememberAsyncImagePainter(if (imageUri.value.isEmpty())
-        R.drawable.baseline_person
-    else
-        imageUri.value
-    )
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let {
-            imageUri.value = it.toString()
-            // Call the callback when a photo is selected
-            onPhotoSelected()
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Card(
-            shape = CircleShape,
-            modifier = Modifier
-                .padding(8.dp)
-                .size(100.dp)
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .clickable { launcher.launch("image/*") },
-                contentScale = ContentScale.Crop
-            )
-        }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = usuario.getNome())
+
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            // Exibir o avatar do usuário aqui
+            Image(
+                painter = painterResource(id = R.drawable.avatar_user), // Substitua pelo recurso de imagem do avatar
+                contentDescription = null, // Substitua pela descrição adequada
+                modifier = Modifier.size(180.dp) // Defina o tamanho do avatar
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                // Exiba o nome do usuário aqui
+                " ${viewModel.nomeUsuarioLogado}",// Exibe o nome do usuário do ViewModel
+                style = TextStyle(fontWeight = FontWeight.Bold),
+                fontSize = 18.sp
+            )
+
+        }
+
     }
 }
 
@@ -126,5 +103,6 @@ fun ProfileImage(usuario: Usuario, onPhotoSelected: () -> Unit) {
 @Composable
 fun ProfileScreenPreview(){
     val navController = rememberNavController()
-    ProfileScreen(navController)
+    val viewModel = usuarioTeste()
+    ProfileScreen(navController, viewModel)
 }

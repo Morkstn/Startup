@@ -73,8 +73,8 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
     }
 //    val args = remember { navController.currentBackStackEntry?.arguments }
 //    val name = args?.getString("name") ?: ""
-//    val usuario = remember { Usuario() }
-//    val saldo = usuario.saldo
+    val usuario = remember { Usuario() }
+    val saldo = usuario.saldo
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val name = navBackStackEntry?.arguments?.getString("name")
     var isAlertDialogVisible by remember { mutableStateOf(false) }
@@ -95,13 +95,15 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
             Column(
                 modifier = Modifier.fillMaxSize().padding(16.dp)
             ) {
-                Text("Bem-vindo,   $nomeUsuarioLogado",
-//                text = "$name",
-//                        color = Color.White
-                        )
+//                Text("Bem-vindo,   $nomeUsuarioLogado",
+////                text = "$name",
+////                        color = Color.White
+//                        )
                 Spacer(modifier = Modifier.height(70.dp)) // Adiciona espaço entre os textos
                 Text(
-                    text = "O meio ambiente é a nossa casa. Devemos cuidar dele para as futuras gerações.", // Adiciona uma frase sobre o meio ambiente
+//                    text = "O meio ambiente é a nossa casa. Devemos cuidar dele para as futuras gerações.", // Adiciona uma frase sobre o meio ambiente
+                    "Bem-vindo,   $nomeUsuarioLogado \n",
+
                     fontSize = 15.sp, // Ajusta o tamanho da fonte
                     fontWeight = FontWeight.Bold, // Define o peso da fonte como negrito
                     color = Color.White,
@@ -228,12 +230,13 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-//                        text = "$saldo",
-                            text = "saldo",
+                        text = "$saldo",
+//                            text = "saldo",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
                 }
+
                 Divider(
                     color = Color.DarkGray,
                     modifier = Modifier.padding(top = 5.dp)
@@ -282,6 +285,7 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
                 isAlertDialogVisible =
                     true }),
         ) {
+            Spacer(modifier = Modifier.height(10.dp))
             Row(
                 modifier =
                 Modifier.fillMaxWidth(),
@@ -290,11 +294,9 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
             ) {
 
 // Icon(imageVector =
-                Icon(
-                    imageVector = Icons.Filled.Star,
-                    contentDescription = "Icon de estrela",
-                    modifier = Modifier.padding(8.dp)
-                )
+                val customIcon = painterResource(id = R.drawable.funds) // Substitua "ic_custom" pelo nome do seu ícone personalizado
+                Image(painter = customIcon, contentDescription = null, modifier = Modifier.size(45.dp).padding(5.dp)) // Adiciona um ícone de configurações
+
                 Text(
                     text = "Aproveite nossos planos",
                     fontSize = 16.sp,
@@ -318,7 +320,7 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
             item {
                 Card(
 
-                    modifier = Modifier.width(175.dp).height(175.dp)
+                    modifier = Modifier.width(170.dp).height(160.dp)
                             .clickable {
                         val url = "https://www.instagram.com/minkostn/" // Substitua pela sua URL externa
                         URLLauncher.launchURL(url, context, launcher)
@@ -345,7 +347,7 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
                 Card(
                     onClick = { isAlertDialogVisible =
                         true },
-                    modifier = Modifier.width(175.dp).height(175.dp)
+                    modifier = Modifier.width(170.dp).height(160.dp)
                 ) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -356,9 +358,10 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
                             modifier = Modifier.size(40.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(Icons.Default.Favorite, contentDescription = null)
+                            val customIcon = painterResource(id = R.drawable.request) // Substitua "ic_custom" pelo nome do seu ícone personalizado
+                            Image(painter = customIcon, contentDescription = null, modifier = Modifier.size(25.dp))
                         }
-                        Text("Em que é baseado meus pontos? ", textAlign = TextAlign.Center)
+                        Text("Como é baseado meus pontos? ", textAlign = TextAlign.Center)
                     }
                 }
 

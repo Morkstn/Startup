@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fiap.startup.database.repository.UsuarioRepository
 import com.fiap.startup.model.usuarioTeste
+import com.fiap.startup.view.DescriptionScreen
 import com.fiap.startup.view.ExplorerScreen
 import com.fiap.startup.view.LoginScreen
 import com.fiap.startup.view.MainScreen
@@ -51,9 +52,8 @@ fun AppNavigation() {
         composable(AppScreen.RewardsScreen.route) {
             RewardsScreen(navController = navController)
         }
-
         composable(AppScreen.ProfileScreen.route){
-            ProfileScreen(navController = navController)
+            ProfileScreen(navController, viewModel)
         }
         composable(AppScreen.SettingsScreen.route){
             SettingsScreen(navController = navController)
@@ -67,6 +67,10 @@ fun AppNavigation() {
 
         composable(AppScreen.PasswordRecoveryScreen.route){
             PasswordRecoveryScreen(navController = navController)
+        }
+
+        composable(AppScreen.DescriptionScreen.route){
+            DescriptionScreen(navController = navController)
         }
 
     }

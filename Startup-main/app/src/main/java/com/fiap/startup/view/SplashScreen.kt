@@ -51,12 +51,12 @@ fun Splash(){
             modifier = Modifier.size(150.dp, 150.dp)
         )
 
-        Text(
-            text = "MJV Corporation",
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
+//        Text(
+//            text = "MJV Corporation",
+//            fontSize = 15.sp,
+//            fontWeight = FontWeight.Bold,
+//            modifier = Modifier.align(Alignment.BottomCenter)
+//        )
     }
 }
 

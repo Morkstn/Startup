@@ -13,6 +13,7 @@ import com.fiap.startup.navigation.AppNavigation
 import com.fiap.startup.ui.theme.StartupTheme
 
 class MainActivity : ComponentActivity() {
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -23,9 +23,7 @@ sealed class AppScreen(val route: String,  val title: String) {
 
     object ProfileScreen: AppScreen("Profile","profile_screen")
 
-    object CadastroTeste: AppScreen("Teste", "teste_cadastro")
-
-    object MainTeste: AppScreen("main_screen", "teste")
+    object  DescriptionScreen: AppScreen ("Description", "description_screen")
 
 
 }
