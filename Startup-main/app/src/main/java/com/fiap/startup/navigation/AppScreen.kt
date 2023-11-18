@@ -19,6 +19,8 @@ sealed class AppScreen(val route: String,  val title: String) {
 
     object RewardsScreen: AppScreen("Rewards","rewards_screen")
 
+    object StatementScreen: AppScreen("Statement","statement_screen")
+
     object ExplorerScreen: AppScreen("Explorer","explorer_screen")
 
     object ProfileScreen: AppScreen("Profile","profile_screen")

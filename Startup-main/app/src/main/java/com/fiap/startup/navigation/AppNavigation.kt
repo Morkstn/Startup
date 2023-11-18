@@ -20,6 +20,7 @@ import com.fiap.startup.view.RewardsScreen
 import com.fiap.startup.view.SettingsScreen
 import com.fiap.startup.view.SingUpScreen
 import com.fiap.startup.view.SplashScreen
+import com.fiap.startup.view.StatementScreen
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -57,6 +58,10 @@ fun AppNavigation() {
         }
         composable(AppScreen.SettingsScreen.route){
             SettingsScreen(navController = navController)
+        }
+
+        composable(AppScreen.StatementScreen.route){
+            StatementScreen(navController = navController)
         }
 
         composable(AppScreen.ExplorerScreen.route){

@@ -250,10 +250,8 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable {
-                                isAlertDialogVisible =
-                                    true
-                            }
+                            .clickable { navController.navigate(AppScreen.StatementScreen.route) }
+
                     ) {
                         Row(
                             modifier = Modifier
@@ -267,7 +265,6 @@ fun MainScreen(navController: NavHostController, viewModel: usuarioTeste) {
                             Icon(Icons.Default.ArrowForward, contentDescription = null)
                         }
                     }
-
                 }
             }
         }
